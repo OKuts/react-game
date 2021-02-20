@@ -1,3 +1,11 @@
-body {
-    background: #ccc;
+* {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    // box-sizing: border-box;
+}
+
+html, body {
+    font-size: 10px;
+    font-family: Open Sans,sans-serif;
 }
