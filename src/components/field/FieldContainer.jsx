@@ -1,21 +1,21 @@
 import { connect } from 'react-redux';
 import Field from './Field';
-// import { changeLevelCreator } from '../../store/titleReducer';
+import { deleteBlockCreator } from '../../store/fieldReducer';
 
 const mapStateToProps = (state) => {
-
-    console.log(state.field)
+    console.log(state.game.gameSquare)
     return {
-        field: state.field
+        field: state.field,
+        game: state.game.gameSquare.reduce((acc, el) => [...acc, ...el], [])
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         changeAreaFromContainer: (text) => dispatch(changeLevelCreator(value))
-//     }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        openBlock: (value) => dispatch(deleteBlockCreator(value))
+    }
+}
 
-const FieldContainer = connect(mapStateToProps)(Field);
+const FieldContainer = connect(mapStateToProps, mapDispatchToProps)(Field);
 
 export default FieldContainer;

@@ -3,10 +3,8 @@ import './Field.scss';
 import store from '../../store/store'
 
 const smile = {
-    flag: '🏴‍☠️',
-    bomb: '💣'
+    flag: '🏴‍☠️'
 }
-
 
 const Field = (props) => {
     const f1 = React.createRef();
@@ -39,12 +37,13 @@ const Field = (props) => {
 
     const deleteBlock = (e) => {
         e.target.classList.add('display-none');
+        props.openBlock(e.target.dataset.yx)
     }
 
     return (
         <div className="field" ref={f1}>
             <div>
-                {Array(h * w).fill().map((el, i) =>
+                {props.game.map((el, i) =>
                     <div key={i}
                         className="one-square"
                         style={
@@ -54,11 +53,13 @@ const Field = (props) => {
                             }
                         }
                         data-yx={`${Math.floor(i / w)}:${i % h}`}
-                    >{smile.bomb}</div>)
+                    >{props.game[i]}
+                    </div>
+                )
                 }
             </div>
             <div className="second">
-                {Array(h * w).fill().map((el, i) =>
+                {props.game.map((el, i) =>
                     <div key={i}
                         onClick={deleteBlock}
                         className="one-square marker"
@@ -69,7 +70,8 @@ const Field = (props) => {
                             }
                         }
                         data-yx={`${Math.floor(i / w)}:${i % h}`}
-                    ></div>)
+                    ></div>
+                )
                 }
             </div>
         </div >
