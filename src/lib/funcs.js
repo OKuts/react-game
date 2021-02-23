@@ -1,4 +1,21 @@
-
+export const openNearBlock = (x, y, game, control) => {
+    control[x][y] = true;
+    for (let i = x - 1; i <= x + 1; i++) {
+        for (let j = y - 1; j <= y + 1; j++) {
+            let d = Math.abs((x + y) - (i + j));
+            try {
+                if (d !== 2 && d !== 0 && game[i][j] !== undefined)
+                    if (game[i][j] === '' && control[i][j] !== true) {
+                        console.log(i, j);
+                        openNearBlock(i, j, game, control);
+                    } else {
+                        control[i][j] = true;
+                    }
+            } catch { }
+        }
+    }
+    return;
+}
 
 
 export const matrix = (x, y) => {

@@ -3,10 +3,11 @@ import Field from './Field';
 import { deleteBlockCreator } from '../../store/fieldReducer';
 
 const mapStateToProps = (state) => {
-    console.log(state.game.gameSquare)
+    // console.log('state', state)
     return {
-        field: state.field,
-        game: state.game.gameSquare.reduce((acc, el) => [...acc, ...el], [])
+        sizes: state.titleData,
+        game: state.fieldData.gameSquare.flat(),
+        control: state.fieldData.controlSquare.flat(),
     }
 }
 

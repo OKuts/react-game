@@ -7,21 +7,24 @@ const smile = {
 }
 
 const Field = (props) => {
+    // console.log(props)
+
     const f1 = React.createRef();
-    console.log(props)
-    const [w, setW] = useState(props.field.w);
-    const [h, setH] = useState(props.field.h);
+    const [w, setW] = useState(props.sizes.w);
+    const [h, setH] = useState(props.sizes.h);
+
+    // console.log(props.field)
     store.subscribe(() => {
-        setH(props.field.h);
-        setW(props.field.w);
+        setH(props.sizes.h);
+        setW(props.sizes.w);
     });
 
     useEffect(() => {
         f1.current.classList.remove('amateur')
         f1.current.classList.remove('beginner')
         f1.current.classList.remove('professional')
-        if (props.field.h === props.field.w) {
-            switch (props.field.h) {
+        if (h === w) {
+            switch (h) {
                 case 10:
                     f1.current.classList.add('beginner');
                     break;
@@ -36,7 +39,6 @@ const Field = (props) => {
     })
 
     const deleteBlock = (e) => {
-        e.target.classList.add('display-none');
         props.openBlock(e.target.dataset.yx)
     }
 
@@ -59,10 +61,10 @@ const Field = (props) => {
                 }
             </div>
             <div className="second">
-                {props.game.map((el, i) =>
+                {props.control.map((el, i) =>
                     <div key={i}
                         onClick={deleteBlock}
-                        className="one-square marker"
+                        className={el === 0 ? "one-square marker" : "one-square marker display-none"}
                         style={
                             {
                                 left: `${30 * (i % h)}px`,
@@ -70,8 +72,7 @@ const Field = (props) => {
                             }
                         }
                         data-yx={`${Math.floor(i / w)}:${i % h}`}
-                    ></div>
-                )
+                    ></div>)
                 }
             </div>
         </div >

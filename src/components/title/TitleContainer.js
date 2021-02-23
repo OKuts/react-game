@@ -3,10 +3,7 @@ import Title from './Title';
 import { changeLevelCreator } from '../../store/titleReducer';
 
 const mapStateToProps = (state) => {
-    // console.log(10, state)
-    return {
-        field: state.field
-    }
+    return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
