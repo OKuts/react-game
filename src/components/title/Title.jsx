@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './Title.scss';
 import mine from '../../images/gnome-mines.png';
+import store from '../../store/store';
 
 const Title = (props) => {
+    const [active, setActive] = useState(props.active);
 
     const setLevel = (e) => {
-        const n = e.target.dataset.i * 5 + 10;
-        props.changeLevel({ w: n, h: n })
+        props.changeLevel({ level: e.target.dataset.i })
     }
+
+    store.subscribe(() => {
+        setActive(store.getState().titleData.active);
+    });
 
     return (
         <div className="header">
@@ -15,10 +20,15 @@ const Title = (props) => {
                 <img src={mine} alt="mine" />
             </div>
             <nav className="nav">
-                <div onClick={setLevel} data-i="0" className="active">beginner</div>
-                <div onClick={setLevel} data-i="1">amateur</div>
-                <div onClick={setLevel} data-i="2">professional</div>
-                <div onClick={setLevel} data-i="3">special</div>
+                {props.nav.map((el, i) =>
+                    <div
+                        key={i}
+                        onClick={setLevel}
+                        data-i={i}
+                        className={active == i ? "active" : ""}
+                    >
+                        {el.level}
+                    </div>)}
             </nav>
         </div >
     )

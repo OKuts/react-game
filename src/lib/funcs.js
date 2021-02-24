@@ -6,7 +6,6 @@ export const openNearBlock = (x, y, game, control) => {
             try {
                 if (d !== 2 && d !== 0 && game[i][j] !== undefined)
                     if (game[i][j] === '' && control[i][j] !== true) {
-                        console.log(i, j);
                         openNearBlock(i, j, game, control);
                     } else {
                         control[i][j] = true;
@@ -17,10 +16,8 @@ export const openNearBlock = (x, y, game, control) => {
     return;
 }
 
-
 export const matrix = (x, y) => {
     const arr = Array(y).fill(null).map(() => Array(x).fill(''));
-
     let n = 0;
     while (n < (x + y) / 2) {
         let tempX = Math.round(Math.random() * (x - 1));
@@ -44,6 +41,5 @@ export const matrix = (x, y) => {
             }
         })
     })
-
     return arr;
 }

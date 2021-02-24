@@ -7,39 +7,33 @@ const smile = {
 }
 
 const Field = (props) => {
-    // console.log(props)
-
+    // console.log('props', props)
+    // console.log(9000, props.sizes.levels[props.sizes.active].h)
+    // console.log(4444, props.sizes.level)
     const f1 = React.createRef();
     const [w, setW] = useState(props.sizes.w);
     const [h, setH] = useState(props.sizes.h);
+    const [level, setLevel] = useState(props.sizes.levels[props.sizes.active]);
 
-    // console.log(props.field)
     store.subscribe(() => {
-        setH(props.sizes.h);
-        setW(props.sizes.w);
+        setH(props.sizes.levels[props.sizes.active].h);
+        setW(props.sizes.levels[props.sizes.active].w);
+        setLevel(props.sizes.levels[props.sizes.active]);
+
     });
 
+
     useEffect(() => {
-        f1.current.classList.remove('amateur')
-        f1.current.classList.remove('beginner')
-        f1.current.classList.remove('professional')
-        if (h === w) {
-            switch (h) {
-                case 10:
-                    f1.current.classList.add('beginner');
-                    break;
-                case 15:
-                    f1.current.classList.add('amateur');
-                    break;
-                case 20:
-                    f1.current.classList.add('professional');
-                    break;
-            }
-        }
-    })
+        f1.current.classList.remove('amateur');
+        f1.current.classList.remove('beginner');
+        f1.current.classList.remove('professional');
+        f1.current.classList.add(level.level);
+        props.changeGame(level);
+    }, [level])
 
     const deleteBlock = (e) => {
         props.openBlock(e.target.dataset.yx)
+        // console.log(e.target.dataset.yx)
     }
 
     return (
@@ -50,12 +44,12 @@ const Field = (props) => {
                         className="one-square"
                         style={
                             {
-                                left: `${30 * (i % h)}px`,
-                                top: `${Math.floor(i / w) * 30}px`
+                                left: `${30 * (i % level.w)}px`,
+                                top: `${Math.floor(i / level.h) * 30}px`
                             }
                         }
-                        data-yx={`${Math.floor(i / w)}:${i % h}`}
-                    >{props.game[i]}
+                        data-yx={`${Math.floor(i / level.w)}:${i % level.h}`}
+                    >{el}
                     </div>
                 )
                 }
@@ -67,11 +61,11 @@ const Field = (props) => {
                         className={el === 0 ? "one-square marker" : "one-square marker display-none"}
                         style={
                             {
-                                left: `${30 * (i % h)}px`,
-                                top: `${Math.floor(i / w) * 30}px`
+                                left: `${30 * (i % level.h)}px`,
+                                top: `${Math.floor(i / level.w) * 30}px`
                             }
                         }
-                        data-yx={`${Math.floor(i / w)}:${i % h}`}
+                        data-yx={`${Math.floor(i / level.w)}:${i % level.h}`}
                     ></div>)
                 }
             </div>
