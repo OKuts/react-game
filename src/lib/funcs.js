@@ -1,3 +1,5 @@
+export const returnXY = (xy) => [+xy.slice(0, xy.indexOf(':')), +xy.slice(xy.indexOf(':') + 1)];
+
 export const openNearBlock = (x, y, game, control) => {
     control[x][y] = true;
     for (let i = x - 1; i <= x + 1; i++) {
@@ -16,10 +18,13 @@ export const openNearBlock = (x, y, game, control) => {
     return;
 }
 
+export const bombAmount = (x, y) => (x + y) / 2 + Math.round((x + y) / 8);
+
 export const matrix = (x, y) => {
     const arr = Array(y).fill(null).map(() => Array(x).fill(''));
+    const bomb = bombAmount(x, y);
     let n = 0;
-    while (n < (x + y) / 2) {
+    while (n < bomb) {
         let tempX = Math.round(Math.random() * (x - 1));
         let tempY = Math.round(Math.random() * (y - 1));
         if (arr[tempX][tempY] === '') {

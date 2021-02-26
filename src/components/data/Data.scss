@@ -1,0 +1,8 @@
+.score-data {
+    display: flex;
+    justify-content: center;
+
+    & span {
+        margin: 1rem 2rem;
+    }
+}

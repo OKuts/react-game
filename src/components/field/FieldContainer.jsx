@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Field from './Field';
-import { deleteBlockCreator, changeGameCreator } from '../../store/fieldReducer';
+import { deleteBlockCreator, changeGameCreator, toggleFlagCreator } from '../../store/fieldReducer';
 
 const mapStateToProps = (state) => {
     // console.log('state', state)
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         openBlock: (value) => dispatch(deleteBlockCreator(value)),
-        changeGame: (value) => dispatch(changeGameCreator(value))
+        changeGame: (value) => dispatch(changeGameCreator(value)),
+        toggleFlag: (value) => dispatch(toggleFlagCreator(value))
     }
 }
 

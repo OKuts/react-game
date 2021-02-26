@@ -1,7 +1,8 @@
 .header {
     display: flex;
-    font-size: 2rem;
-    height: 10rem;
+    font-size: 1.5rem;
+    height: 8rem;
+    justify-content: center;
     & .logo {
         width: 10rem;
     }

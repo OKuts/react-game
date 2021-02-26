@@ -7,9 +7,9 @@
     position: absolute;
 }
 
-.beginner {
-    width: 300px;
-    height: 300px;
+.professional {
+    width: 600px;
+    height: 600px;
 }
 
 .amateur {
@@ -17,12 +17,12 @@
     height: 450px;
 }
 
-.professional {
-    width: 600px;
-    height: 600px;
+.beginner {
+    width: 300px;
+    height: 300px;
 }
 
-.one-square {
+.one_square {
     width: 28px;
     height: 28px;
     background: #ddd;
@@ -38,6 +38,6 @@
     background: rgb(100, 236, 202);
 }
 
-.display-none {
+.display_none {
     display: none;
 }
