@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Styles from './Field.module.scss';
 import store from '../../store/store';
 import cn from 'classnames';
 
 const Field = (props) => {
-    const f1 = React.createRef();
-    const [w, setW] = useState(props.sizes.w);
-    const [h, setH] = useState(props.sizes.h);
-    const [level, setLevel] = useState(props.sizes.levels[props.sizes.active]);
+    // console.log('props field', props)
+    const [w, setW] = useState(props.level.w);
+    const [h, setH] = useState(props.level.h);
 
-    store.subscribe(() => {
-        setH(props.sizes.levels[props.sizes.active].h);
-        setW(props.sizes.levels[props.sizes.active].w);
-        setLevel(props.sizes.levels[props.sizes.active]);
-    });
-
+    let classFieldCN = cn({
+        [Styles.beginner]: props.level.level === 'beginner',
+        [Styles.amateur]: props.level.level === 'amateur',
+        [Styles.professional]: props.level.level === 'professional',
+        [Styles.special]: props.level.level === 'special',
+    })
 
     useEffect(() => {
-        // f1.current.classList.add(level.level);
-        props.changeGame(level);
-    }, [level])
+        setH(props.level.h);
+        setW(props.level.w);
+        props.changeGame({ w: props.level.w, h: props.level.h });
+    }, [props.active])
 
     const deleteBlock = (e) => {
         props.openBlock(e.target.dataset.yx)
-        console.log('delete', e.target.dataset.yx)
     }
 
     const setFlag = (e) => {
@@ -31,27 +30,20 @@ const Field = (props) => {
         props.toggleFlag(e.target.dataset.yx)
     }
 
-    const classFieldCN = cn({
-        [Styles.beginner]: level.level === 'beginner',
-        [Styles.amateur]: level === '1',
-        [Styles.professional]: level === '2',
-        [Styles.special]: level === '3',
-    })
-
     return (
         <div className={Styles.field} >
-            <div className={classFieldCN}>
+            <div className={classFieldCN} >
                 {props.game.map((el, i) =>
                     <div key={i}
                         className={Styles.one_square}
                         onContextMenu={(e) => e.preventDefault()}
                         style={
                             {
-                                left: `${30 * (i % level.w)}px`,
-                                top: `${Math.floor(i / level.h) * 30}px`
+                                left: `${30 * (i % w)}px`,
+                                top: `${Math.floor(i / h) * 30}px`
                             }
                         }
-                        data-yx={`${Math.floor(i / level.w)}:${i % level.h}`}
+                        data-yx={`${Math.floor(i / w)}:${i % h}`}
                     >{el}
                     </div>
                 )
@@ -68,11 +60,11 @@ const Field = (props) => {
                     })}
                     style={
                         {
-                            left: `${30 * (i % level.h)}px`,
-                            top: `${Math.floor(i / level.w) * 30}px`
+                            left: `${30 * (i % h)}px`,
+                            top: `${Math.floor(i / w) * 30}px`
                         }
                     }
-                    data-yx={`${Math.floor(i / level.w)}:${i % level.h}`}
+                    data-yx={`${Math.floor(i / w)}:${i % h}`}
                 >
                     {el === '🏴‍☠️' ? '🏴‍☠️' : ''}
                 </div>)

@@ -3,7 +3,7 @@ import Title from './Title';
 import { changeLevelCreator } from '../../store/titleReducer';
 
 const mapStateToProps = (state) => {
-    // console.log(state)
+    console.log('state title', state)
     return {
         nav: state.titleData.levels,
         active: state.titleData.active

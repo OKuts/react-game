@@ -3,7 +3,7 @@ import Data from './Data';
 // import { changeLevelCreator } from '../../store/titleReducer';
 
 const mapStateToProps = (state) => {
-    console.log('Data', state)
+    // console.log('Data', state)
     return {
         bomb: state.fieldData.bomb
     }

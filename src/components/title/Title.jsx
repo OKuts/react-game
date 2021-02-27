@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Title.scss';
 import mine from '../../images/gnome-mines.png';
-import store from '../../store/store';
 
 const Title = (props) => {
+
+    // console.log('props title', props)
     const [active, setActive] = useState(props.active);
 
     const setLevel = (e) => {
         props.changeLevel({ level: e.target.dataset.i })
     }
 
-    store.subscribe(() => {
-        setActive(store.getState().titleData.active);
-    });
+    useEffect(() => {
+        setActive(props.active)
+    }, [props.active])
 
     return (
         <div className="header">

@@ -27,8 +27,11 @@ const initialState = {
 };
 
 const titleReducer = (state = initialState, action) => {
+
     if (action.type === SET_LEVEL) {
-        state.active = action.level.level;
+        const stateCopy = Object.assign({}, state);
+        stateCopy.active = action.level.level;
+        return stateCopy;
     }
     return state;
 }

@@ -7,7 +7,8 @@ const TOGGLE_FLAG = 'TOGGLE_FLAG';
 const initialState = {
     gameSquare: matrix(10, 10),
     controlSquare: Array(10).fill(null).map(() => Array(10).fill(0)),
-    bomb: bombAmount(10, 10)
+    bomb: bombAmount(10, 10),
+    bombBalance: bombAmount(10, 10)
 };
 
 const fieldReducer = (state = initialState, action) => {
@@ -24,6 +25,7 @@ const fieldReducer = (state = initialState, action) => {
             return stateCopy;
         }
         case CHANGE_GAME: {
+            // console.log('CHANGE_GAME', action)
             let stateCopy = Object.assign({}, state);
             stateCopy.gameSquare = [...matrix(action.newLevel.w, action.newLevel.h)];
             stateCopy.controlSquare = [...Array(action.newLevel.h).fill(null).map(() => Array(action.newLevel.w).fill(0))];
