@@ -8,3 +8,15 @@ html, body {
     font-size: 10px;
     font-family: Open Sans,sans-serif;
 }
+
+@media screen and (max-width: 750px){
+    html, body {
+        font-size: 8px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    html, body {
+        font-size: 6px;
+    }
+}

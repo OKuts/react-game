@@ -1,12 +1,13 @@
+export const isVictory = (arr) => arr.flat().reduce((acc, el) => el === 0 ? acc + 1 : acc, 0);
+
 export const returnXY = (xy) => [+xy.slice(0, xy.indexOf(':')), +xy.slice(xy.indexOf(':') + 1)];
 
 export const openNearBlock = (x, y, game, control) => {
     control[x][y] = true;
     for (let i = x - 1; i <= x + 1; i++) {
         for (let j = y - 1; j <= y + 1; j++) {
-            let d = Math.abs((x + y) - (i + j));
             try {
-                if (d !== 2 && d !== 0 && game[i][j] !== undefined)
+                if (game[i][j] !== undefined)
                     if (game[i][j] === '' && control[i][j] !== true) {
                         openNearBlock(i, j, game, control);
                     } else {
@@ -18,7 +19,7 @@ export const openNearBlock = (x, y, game, control) => {
     return;
 }
 
-export const bombAmount = (x, y) => (x + y) / 2 + Math.round((x + y) / 8);
+export const bombAmount = (x, y) => Math.round((x * y) / 10 + (x + y) / 4);
 
 export const matrix = (x, y) => {
     const arr = Array(y).fill(null).map(() => Array(x).fill(''));

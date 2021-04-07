@@ -1,4 +1,4 @@
-import { matrix, openNearBlock, returnXY, bombAmount } from "../lib/funcs";
+import { matrix, openNearBlock, returnXY, bombAmount, isVictory } from "../lib/funcs";
 
 const DELETE_BLOCK = 'DELETE_BLOCK';
 const CHANGE_GAME = 'CHANGE_GAME';
@@ -8,40 +8,66 @@ const initialState = {
     gameSquare: matrix(10, 10),
     controlSquare: Array(10).fill(null).map(() => Array(10).fill(0)),
     bomb: bombAmount(10, 10),
-    bombBalance: bombAmount(10, 10)
+    flagBalance: bombAmount(10, 10),
+    step: 0,
+    isGame: true
 };
 
 const fieldReducer = (state = initialState, action) => {
     switch (action.type) {
         case DELETE_BLOCK: {
-            let stateCopy = Object.assign({}, state);
-            const [x, y] = returnXY(action.blockYX);
-            if (stateCopy.gameSquare[x][y] === '') {
-                openNearBlock(x, y, state.gameSquare, stateCopy.controlSquare);
-            } else if (stateCopy.gameSquare[x][y] === '💣') {
-                console.log('Game over');
-                stateCopy.controlSquare.fill(true);
-            } else stateCopy.controlSquare[x][y] = true;
-            return stateCopy;
+            if (state.isGame) {
+                let stateCopy = Object.assign({}, state);
+                const [x, y] = returnXY(action.blockYX);
+                if (stateCopy.gameSquare[x][y] === '') {
+                    stateCopy.step += 1;
+                    openNearBlock(x, y, state.gameSquare, stateCopy.controlSquare);
+                    if (!isVictory(stateCopy.controlSquare)) stateCopy.isGame = false;
+                } else if (stateCopy.gameSquare[x][y] === '💣') {
+                    stateCopy.isGame = false;
+                    stateCopy.controlSquare.fill(true);
+                } else {
+                    stateCopy.step += 1;
+                    stateCopy.controlSquare[x][y] = true;
+                    if (!isVictory(stateCopy.controlSquare)) stateCopy.isGame = false;
+                }
+                return stateCopy;
+            } else return state;
         }
         case CHANGE_GAME: {
-            // console.log('CHANGE_GAME', action)
+            // console.log('CHANGE_GAME', state)
             let stateCopy = Object.assign({}, state);
+            stateCopy.step = 0;
+            stateCopy.bomb = bombAmount(action.newLevel.w, action.newLevel.h);
+            stateCopy.flagBalance = stateCopy.bomb;
+            stateCopy.isGame = true;
             stateCopy.gameSquare = [...matrix(action.newLevel.w, action.newLevel.h)];
             stateCopy.controlSquare = [...Array(action.newLevel.h).fill(null).map(() => Array(action.newLevel.w).fill(0))];
             return stateCopy;
         }
 
         case TOGGLE_FLAG: {
-            let stateCopy = Object.assign({}, state);
-            const [x, y] = returnXY(action.blockYX);
-            stateCopy.controlSquare[x][y] = stateCopy.controlSquare[x][y] === 0 ? '🏴‍☠️' : 0;
-            return stateCopy;
+            if (state.isGame) {
+                let stateCopy = Object.assign({}, state);
+                const [x, y] = returnXY(action.blockYX);
+                stateCopy.step += 1;
+                if (stateCopy.controlSquare[x][y] === 0) {
+                    if (stateCopy.flagBalance > 0) {
+                        stateCopy.controlSquare[x][y] = '🏴‍☠️';
+                        stateCopy.flagBalance -= 1;
+                    }
+                } else {
+                    stateCopy.controlSquare[x][y] = 0;
+                    stateCopy.flagBalance += 1;
+                }
+                if (!isVictory(stateCopy.controlSquare)) stateCopy.isGame = false;
+                return stateCopy;
+            } else return state;
         }
-
         default: return state;
     }
 }
+
 export default fieldReducer;
 
 export const deleteBlockCreator = (value) => ({ type: DELETE_BLOCK, blockYX: value });

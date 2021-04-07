@@ -17,11 +17,6 @@ const initialState = {
             level: 'professional',
             w: 20,
             h: 20
-        },
-        {
-            level: 'special',
-            w: 24,
-            h: 30
         }
     ]
 };

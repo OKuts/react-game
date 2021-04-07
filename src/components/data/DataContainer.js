@@ -5,7 +5,10 @@ import Data from './Data';
 const mapStateToProps = (state) => {
     // console.log('Data', state)
     return {
-        bomb: state.fieldData.bomb
+        bomb: state.fieldData.bomb,
+        flagBalance: state.fieldData.flagBalance,
+        step: state.fieldData.step,
+        isGame: state.fieldData.isGame
     }
 }
 

@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Data.scss';
-// import store from '../../store/store';
 
 const Data = (props) => {
-    // const [active, setActive] = useState(props.active);
-
-    // const setLevel = (e) => {
-    //     props.changeLevel({ level: e.target.dataset.i })
-    // }
-
-    // store.subscribe(() => {
-    //     setActive(store.getState().titleData.active);
-    // });
+    const [time, setTime] = useState(0);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // setTime(time + 1);
+            console.log('This will run every second!', new Date().toLocaleTimeString());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div className="score-data">
-            <span>🏴‍☠️ {props.bomb}</span>
-            <span>step:{props.bomb}</span>
-            <span>{'time'}</span>
+            <span>🏴‍☠️ ( {props.flagBalance} )</span>
+            {/* <span>time  ( {time} )</span> */}
         </div >
     )
 }

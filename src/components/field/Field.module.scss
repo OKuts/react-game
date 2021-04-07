@@ -1,43 +1,66 @@
+.portal {
+    position: absolute;
+}
+
 .field {
     border: 1px solid #ccc;
     position: relative;
 }
 
-// .second {
-//     position: absolute;
-// }
-
 .professional {
-    width: 600px;
-    height: 600px;
+    width: 60rem;
+    height: 60rem;
 }
 
 .amateur {
-    width: 450px;
-    height: 450px;
+    width: 45rem;
+    height: 45rem;
 }
 
 .beginner {
-    width: 300px;
-    height: 300px;
+    width: 30rem;
+    height: 30rem;
 }
 
 .one_square {
-    width: 28px;
-    height: 28px;
+    width: calc(3rem - 2px);
+    height: calc(3rem - 2px);
     background: #ddd;
-    margin: 1px;
+    margin: 0.1rem;
     font-size: 1.5rem; 
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
+    cursor: pointer;
 }
 
 .marker {
     background: rgb(100, 236, 202);
+    &:hover {
+        background: rgb(73, 199, 168);
+    }
 }
 
 .display_none {
     display: none;
+}
+
+.new_game {
+    display: flex;
+    justify-content: center;
+    background: crimson;
+    span {
+        background: transparent;
+        color: #fff;
+        padding: 1rem;
+        font-size: 2rem;
+    }
+}
+
+.game_over {
+    position: absolute;
+    top: 100px;
+    font-size: 4rem;
+    background: transparent;
 }

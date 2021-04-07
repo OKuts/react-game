@@ -3,12 +3,13 @@ import Field from './Field';
 import { deleteBlockCreator, changeGameCreator, toggleFlagCreator } from '../../store/fieldReducer';
 
 const mapStateToProps = (state) => {
-    console.log('state field', state)
+    // console.log('state field', state)
     return {
         level: state.titleData.levels[state.titleData.active],
         active: state.titleData.active,
         game: state.fieldData.gameSquare.flat(),
         control: state.fieldData.controlSquare.flat(),
+        isGame: state.fieldData.isGame,
     }
 }
 
