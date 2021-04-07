@@ -1,0 +1,30 @@
+.header {
+    display: flex;
+    font-size: 1.5rem;
+    height: 8rem;
+    justify-content: center;
+    & .logo {
+        width: 10rem;
+    }
+    & img {
+        height: 100%;
+    }
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    & div {
+        padding: 2rem;
+        border-radius: 5rem;
+        border: 1px solid #fff;
+    }
+    & div:hover {
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
+     & .active {
+        background: #ccc;
+    }
+}
+
